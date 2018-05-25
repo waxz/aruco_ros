@@ -5,6 +5,18 @@ find_package(catkin)
 
 find_package(OpenCV 3 REQUIRED)
 
+find_package(catkin REQUIRED COMPONENTS
+        cv_bridge
+        dynamic_reconfigure
+        geometry_msgs
+        image_transport
+        roscpp
+        rospy
+        tf
+        sensor_msgs
+        visualization_msgs
+        )
+
 catkin_package(
   INCLUDE_DIRS include
   LIBRARIES aruco
@@ -46,3 +58,7 @@ install(DIRECTORY include/
    FILES_MATCHING PATTERN "*.h"
 )
 
+add_executable(main src/main.cpp
+        src/aruco_ros_utils.cpp)
+#add_dependencies(main ${PROJECT_NAME}_gencfg)
+target_link_libraries(main aruco ${catkin_LIBRARIES} ${OpenCV_LIBRARIES})
